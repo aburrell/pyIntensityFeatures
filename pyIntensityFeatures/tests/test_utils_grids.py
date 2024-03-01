@@ -1,0 +1,100 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Full license can be found in License.md
+# -----------------------------------------------------------------------------
+"""Tests for functions in `utils.grids`."""
+
+import numpy as np
+import unittest
+
+from pyIntensityFeatures.utils import grids
+
+
+class TestGridIntensity(unittest.TestCase):
+    """Tests for `grid_intensity`."""
+
+    def setUp(self):
+        """Set up the test runs."""
+        self.intensity = np.ones(shape=(100,), dtype=float)
+        self.mlat = np.linspace(40.0, 90.0, 100)
+        self.mlt = np.linspace(0.0, 24.0, 100)
+        self.eq_mlat = 50.0
+        self.mlat_inc = 5.0
+        self.mlt_inc = 2.0
+        self.mean_intensity = None
+        self.std_intensity = None
+        self.num_intensity = None
+        self.mlat_bins = None
+        self.mlt_bins = None
+        return
+
+    def tearDown(self):
+        """Tear down the test environment."""
+        del self.intensity, self.mlat, self.mlt, self.eq_mlat, self.mlat_inc
+        del self.mlt_inc, self.mean_intensity, self.std_intensity
+        del self.num_intensity
+        return
+
+    def eval_grid_output(self):
+        """Evaluate the grid output values."""
+        # Test the magnetic latitude bins
+        self.assertLess(self.mlat_bins.shape[0], np.prod(self.mlat.shape))
+        self.assertGreaterEqual(self.mlat_bins.min(), self.eq_mlat)
+        res = np.unique(self.mlat_bins[1:] - self.mlat_bins[:-1])
+        self.assertEqual(res.shape[0], 1)
+        self.assertEqual(res[0], self.mlat_inc)
+
+        # Test the magnetic local time bins
+        self.assertLess(self.mlt_bins.shape[0], np.prod(self.mlt.shape))
+        res = np.unique(self.mlt_bins[1:] - self.mlt_bins[:-1])
+        self.assertEqual(res.shape[0], 1)
+        self.assertEqual(res[0], self.mlt_inc)
+
+        # Test the grid shape
+        res = (self.mlat_bins.shape[0], self.mlt_bins.shape[0])
+        self.assertEqual(self.mean_intensity.shape, res)
+        self.assertEqual(self.std_intensity.shape, res)
+        self.assertEqual(self.num_intensity.shape, res)
+
+        # Test the grid fill values
+        no_pnt_mask = self.num_intensity == 0
+        self.assertTrue(np.all(np.isnan(self.mean_intensity[no_pnt_mask])))
+        self.assertTrue(np.all(np.isnan(self.std_intensity[no_pnt_mask])))
+
+        # Test the grid values, since all intensity values are the same the
+        # mean will be the same as any intensity value and the standard
+        # deviation will be zero
+        self.assertTrue(np.all(self.mean_intensity[~no_pnt_mask]
+                               == self.intensity.min()))
+        self.assertTrue(np.all(self.std_intensity[~no_pnt_mask] == 0.0))
+        return
+
+    def test_grid_intensity_1d(self):
+        """Test success of gridding 1D intensity data."""
+        # Grid the data
+        (self.mean_intensity, self.std_intensity, self.num_intensity,
+         self.mlat_bins, self.mlt_bins) = grids.grid_intensity(
+             self.intensity, self.mlat, self.mlt, eq_mlat=self.eq_mlat,
+             mlat_inc=self.mlat_inc, mlt_inc=self.mlt_inc)
+
+        # Test the output
+        self.eval_grid_output()
+        return
+
+    def test_grid_intensity_multi_dim(self):
+        """Test success of gridding multi-dimensional intensity data."""
+        for new_shape in [(2, 50), (2, 2, 25), (2, 5, 2, 5)]:
+            self.intensity = self.intensity.reshape(new_shape)
+            self.mlat = self.mlat.reshape(new_shape)
+            self.mlt = self.mlt.reshape(new_shape)
+
+            with self.subTest(shape=new_shape):
+                # Grid the data
+                (self.mean_intensity, self.std_intensity, self.num_intensity,
+                 self.mlat_bins, self.mlt_bins) = grids.grid_intensity(
+                     self.intensity, self.mlat, self.mlt, eq_mlat=self.eq_mlat,
+                     mlat_inc=self.mlat_inc, mlt_inc=self.mlt_inc)
+
+                # Test the output
+                self.eval_grid_output()
+        return
