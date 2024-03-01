@@ -1,0 +1,35 @@
+{
+    "license": {
+      "id": "bsd-license"
+    },
+    "keywords": [
+  "aurora",
+  "aurora australis",
+  "aurora borealis",
+  "boundaries",
+  "imager",
+  "ionosphere",
+  "heliophysics",
+  "magnetosphere",
+  "northern lights",
+  "intensity",
+  "southern lights",
+  "features"
+    ],
+    "creators": [
+      {
+        "orcid": "0000-0001-8875-9326", 
+        "affiliation": "Naval Research Laboratory", 
+        "name": "Angeline G. Burrell"
+      },
+      {
+        "affiliation": "KPMG", 
+        "name": "Nicola S. Longden"
+      },
+      {
+        "orcid": "0000-0003-1151-5934", 
+        "affiliation": "British Antarctic Survey", 
+        "name": "Gareth Chisham"
+      }
+    ]
+}

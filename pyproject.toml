@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools >= 38.6", "pip >= 10"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyIntensityFeatures"
+version = "0.0.1"
+description = 'Identify features, such as auroral luminosity boundaries, in imager data'
+readme = "README.md"
+requires-python = ">=3.6"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Angeline Burrell", email = "angeline.g.burrell.civ@us.navy.mil"}
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Topic :: Scientific/Engineering :: Atmospheric Science",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS :: MacOS X",
+  "Operating System :: Microsoft :: Windows"
+]
+keywords = [
+  "aurora",
+  "aurora australis",
+  "aurora borealis",
+  "boundaries",
+  "imager",
+  "ionosphere",
+  "heliophysics",
+  "magnetosphere",
+  "northern lights",
+  "southern lights",
+  "features",
+  "intensity",
+]
+dependencies = [
+  "aacgmv2",
+  "numpy",
+  "pandas",
+  "xarray"]
+
+[project.optional-dependencies]
+apex = [ "apexpy" ]
+test = [
+  "coveralls < 3.3",
+  "flake8",
+  "flake8-docstrings"
+]
+doc = [
+  "sphinx",
+  "sphinx_rtd_theme >= 1.2.2,<2.0.0"
+]
+
+[project.urls]
+# Documentation = "https://pyintensityfeatures.readthedocs.io/en/latest/"
+# Source = "https://github.com/aburrell/pyIntensityFeatures"
+# Tracker = "https://github.com/aburrell/pyIntensityFeatures/issues"
+# Download = "https://github.com/aburrell/pyIntensityFeatures/releases"
+
+[tool.coverage.run]
+relative_files = true
+include = ["*/pyIntensityFeatures/*",
+           "*/pyIntensityFeatures/tests/*"]
+
+[tool.coverage.paths]
+paths = ["pyIntensityFeatures/",
+         "*/lib/*/site-packages/pyIntensityFeatures"]
+      
+[tool.coverage.report]
+omit = ["*/lib/*/site-packages/*.py",
+        "*/lib/*/site-packages/a*/*",
+        "*/lib/*/site-packages/c*/*",
+        "*/lib/*/site-packages/d*/*",
+        "*/lib/*/site-packages/g*/*",
+        "*/lib/*/site-packages/i*/*",
+        "*/lib/*/site-packages/m*/*",
+        "*/lib/*/site-packages/n*/*",
+        "*/lib/*/site-packages/p*/*",
+        "*/lib/*/site-packages/r*/*",
+        "*/lib/*/site-packages/s*/*",
+        "*/lib/*/site-packages/u*/*"]
