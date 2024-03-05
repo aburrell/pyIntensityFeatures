@@ -1,0 +1,81 @@
+# This workflow will install Python dependencies, run tests and lint with a
+# variety of Python versions. For more information see:
+# https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Flake8 and Unittest
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
+        python-version: ["3.8", "3.10", "3.11", "3.12"]
+        numpy_ver: ["latest"]
+        test_config: ["latest", "apexpy"]
+        include:
+          # NEP29 compliance settings
+          - python-version: "3.9"
+            numpy_ver: "1.23"
+            os: ubuntu-latest
+            test_config: "NEP29"
+          # Operational compliance settings
+          - python-version: "3.6.8"
+            numpy_ver: "1.19.5"
+            os: "ubuntu-20.04"
+            test_config: "Ops"
+
+    name: Python ${{ matrix.python-version }} on ${{ matrix.os }} with numpy ${{ matrix.numpy_ver }}
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install standard dependencies
+      if: ${{ matrix.test_config == 'Ops' | matrix.test_config == 'latest' }}
+      run: pip install .[test]
+
+    - name: Install NEP29 dependencies
+      if: ${{ matrix.test_config == 'NEP29'}}
+      run: |
+        pip install numpy==${{ matrix.numpy_ver }}
+        pip install --upgrade-strategy only-if-needed .[test]
+
+    - name: Install apexpy dependencies
+      if: ${{ matrix.test_config == 'apexpy' }}
+      run: |
+        pip install .[test]
+        pip install .[apexpy]
+
+    - name: Test PEP8 compliance
+      run: flake8 . --count --select=D,E,F,H,W --show-source --statistics
+
+    - name: Evaluate complexity
+      run: flake8 . --count --exit-zero --max-complexity=10 --statistics
+
+    - name: Run unit and integration tests
+      run: coverage run --rcfile=pyproject.toml -m unittest discover
+
+# TODO(#5): Uncomment to publish to coveralls
+#    - name: Publish results to coveralls
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        COVERALLS_PARALLEL: true
+#      run: coveralls --rcfile=pyproject.toml --service=github
+#
+#  finish:
+#    name: Finish Coverage Analysis
+#    needs: build
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Coveralls Finished
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      run: |
+#        pip install --upgrade coveralls
+#        coveralls --service=github --finish
