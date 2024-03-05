@@ -37,7 +37,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install standard dependencies
-      if: ${{ matrix.test_config == 'Ops' | matrix.test_config == 'latest' }}
+      if: ${{ or(matrix.test_config == 'Ops', matrix.test_config == 'latest') }}
       run: pip install .[test]
 
     - name: Install NEP29 dependencies
