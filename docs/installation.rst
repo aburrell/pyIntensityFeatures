@@ -20,6 +20,7 @@ Python 3.6+.
  ============== =================
   numpy         aacgmv2
   pandas        apexpy (optional)
+  scipy
   xarray
  ============== =================
 

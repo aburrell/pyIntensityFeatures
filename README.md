@@ -21,6 +21,7 @@ The required dependecies encompass:
   * aacgmv2
   * numpy
   * pandas
+  * scipy
   * xarray
 
 Optional dependencies include:

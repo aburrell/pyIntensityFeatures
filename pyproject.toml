@@ -47,6 +47,7 @@ dependencies = [
   "aacgmv2",
   "numpy",
   "pandas",
+  "scipy",
   "xarray"]
 
 [project.optional-dependencies]

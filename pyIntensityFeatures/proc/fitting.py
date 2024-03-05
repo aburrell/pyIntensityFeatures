@@ -281,8 +281,15 @@ def get_gaussian_func_fit(mlat_bins, mlt_bins, mean_intensity, std_intensity,
                             mean_intensity[ilats, ilt][fmask],
                             gauss_out[fmask])
                         func_params.append(lsq_result[0])
-                        fit_pearsonr.append(pres.statistic)
-                        fit_pearsonp.append(pres.pvalue)
+
+                        # As of scipy 1.11.0 the output changed
+                        if hasattr(pres, 'statistic'):
+                            fit_pearsonr.append(pres.statistic)
+                            fit_pearsonp.append(pres.pvalue)
+                        else:
+                            fit_pearsonr.append(pres[0])
+                            fit_pearsonp.append(pres[1])
+
                         fit_cov.append(lsq_result[1])
                         found_fit = True
                     else:
