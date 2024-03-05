@@ -37,7 +37,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install standard dependencies
-      if: ${{ or(matrix.test_config == 'Ops', matrix.test_config == 'latest') }}
+      if: ${{ matrix.test_config != 'NEP29'}}
       run: pip install .[test]
 
     - name: Install NEP29 dependencies
@@ -46,11 +46,9 @@ jobs:
         pip install numpy==${{ matrix.numpy_ver }}
         pip install --upgrade-strategy only-if-needed .[test]
 
-    - name: Install apexpy dependencies
+    - name: Install apexpy extras
       if: ${{ matrix.test_config == 'apexpy' }}
-      run: |
-        pip install .[test]
-        pip install .[apexpy]
+      run: pip install .[apexpy]
 
     - name: Test PEP8 compliance
       run: flake8 . --count --select=D,E,F,H,W --show-source --statistics
