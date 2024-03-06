@@ -5,7 +5,7 @@
 [![Test Status]()]()
 [![Coverage Status]()]()
 
-<h1> <img width="128" height="128" src="/docs/figures/pyintensityfeatures_logo.png" alt="Snakes marking the boundaries of the auroral oval" title="pyIntensityFeatures logo" style="float:left;">
+<h1> <img width="128" height="128" src="https://github.nrlmry.navy.mil/burrell/pyIntensityFeatures/blob/main/docs/figures/pyIntensityFeatures_logo.png?raw=true" alt="Snakes marking the boundaries of the auroral oval" title="pyIntensityFeatures logo" style="float:left;">
 Overview </h1>
 
 pyIntensityFeatures is a Python module that identifies features in imager
