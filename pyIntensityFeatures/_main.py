@@ -281,8 +281,8 @@ class AuroralBounds(object):
                 # Retrieve the data variable as a key
                 ret_data = np.array(self.inst_data[var])
             except (TypeError, KeyError, ValueError, IndexError):
-                logger.info("".join(["unable to retrieve ", repr(var),
-                                     " from `inst_data`, data may be empty"]))
+                logger.warning("".join(["unable to retrieve ", repr(var), " ",
+                                        "from `inst_data`, data may be empty"]))
                 ret_data = None
 
         # Transpose the data if desired
