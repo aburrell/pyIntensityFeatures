@@ -128,7 +128,7 @@ def get_slice_mlat_max_min(num_samples, mlat_bins, mlt_bins, mlat_inc=1.0):
 
 
 def as_datetime(time_val):
-    """Ensure a time value is cast as datetime.
+    """Ensure a time value is cast as datetime without timezone information.
 
     Parameters
     ----------
@@ -143,7 +143,9 @@ def as_datetime(time_val):
 
     """
     if isinstance(time_val, dt.datetime):
-        out_time = time_val
+        out_time = dt.datetime(time_val.year, time_val.month, time_val.day,
+                               time_val.hour, time_val.minute, time_val.second,
+                               time_val.microsecond)
     elif isinstance(time_val, dt.date):
         out_time = dt.datetime(time_val.year, time_val.month, time_val.day)
     else:
