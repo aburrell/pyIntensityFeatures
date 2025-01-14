@@ -185,7 +185,7 @@ def evaluate_dayglow(fit_coeff, locations, thresh=300.0):
     Parameters
     ----------
     fit_coeff : array-like
-        Coefficeints, the first three of which are the quadratic constant,
+        Coefficients, the first three of which are the quadratic constant,
         x-term, and x-squared-term.
     locations : array-like
         Locations at which the dayglow level will be evaluated.
