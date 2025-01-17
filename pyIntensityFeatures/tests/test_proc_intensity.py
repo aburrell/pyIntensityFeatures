@@ -137,7 +137,7 @@ class TestIntensityFuncs(unittest.TestCase):
 
                 # Evaluate the outputs
                 self.assertEqual(self.sweep_end, self.sweep_times[-1])
-                #self.assertIsNone(self.out_data)
+                self.assertIsNone(self.out_data)
                 self.assertEqual(self.out_coeff, 0,
                                  msg='unexpected coefficients: {:} {:}'.format(
                                      self.out_coeff, self.out_data))
