@@ -353,7 +353,8 @@ class AuroralBounds(object):
 
     def set_boundaries(self, min_mlat_base=59.0, mag_method='ALLOWTRACE',
                        mlat_inc=1.0, mlt_inc=0.5, un_threshold=1.25,
-                       strict_fit=False, lt_out_bin=5.0, max_iqr=1.5):
+                       dayglow_threshold=300.0, strict_fit=False,
+                       lt_out_bin=5.0, max_iqr=1.5):
         """Set `boundaries` with auroral boundaries from intensity data.
 
         Parameters
@@ -369,6 +370,9 @@ class AuroralBounds(object):
             Magnetic local time increment for gridding intensity. (default=0.5)
         un_threshold : float
             Maximum acceptable uncertainty value in degrees (default=1.25)
+        dayglow_threshold : float
+            Minimum allowable background intensity value in Rayleighs
+            (default=300.0)
         strict_fit : bool
             Enforce positive values for the x-offsets in quadratic-Gaussian fits
             (default=False)
@@ -449,7 +453,7 @@ class AuroralBounds(object):
                  intensity, glat, glon, sweep_times, self.alt,
                  min_mlat_base, max_coeff, method=mag_method,
                  mlat_inc=mlat_inc, mlt_inc=mlt_inc, un_threshold=un_threshold,
-                 strict_fit=strict_fit)
+                 dayglow_threshold=dayglow_threshold, strict_fit=strict_fit)
 
             logger.info("Auroral slice at {:} {:s} data".format(
                 sweep_end, "without" if sweep_data is None else "with"))

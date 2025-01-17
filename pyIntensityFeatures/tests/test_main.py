@@ -548,7 +548,7 @@ class TestAuroralBounds(unittest.TestCase):
                 elif ctype == 'pandas':
                     self.inst_data = self.inst_data[:-10]
                 else:
-                    self.inst_data.assign({
+                    self.inst_data = xr.Dataset({
                         var: (self.inst_data[var].dims,
                               self.inst_data[var].values[:-10])
                         for var in [self.time_var, self.glat_var, self.glon_var,
