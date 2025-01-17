@@ -6,7 +6,6 @@
 
 import datetime as dt
 import numpy as np
-import pandas as pds
 import unittest
 
 from pyIntensityFeatures.utils import coords
