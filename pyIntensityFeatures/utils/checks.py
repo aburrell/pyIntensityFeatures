@@ -6,6 +6,7 @@
 import numpy as np
 import pandas as pds
 
+from pyIntensityFeatures.utils import grids
 from pyIntensityFeatures.utils.distributions import calc_quadratic
 from pyIntensityFeatures import logger
 
@@ -379,7 +380,7 @@ def evaluate_boundary_in_mlt(bound_data, eq_key, po_key, lt_key, ut_key,
     lt.extend(list(bound_data[lt_key].values + 24.0))
 
     # Determine the number of lt values in each window
-    delta_lt = np.unique(np.array(lt)[1:] - np.array(lt)[:-1])
+    delta_lt = grids.unique(np.array(lt)[1:] - np.array(lt)[:-1])
     if len(delta_lt) != 1:
         raise ValueError('local time does not have a fixed frequency')
 
