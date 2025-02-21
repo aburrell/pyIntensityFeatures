@@ -58,8 +58,12 @@ test = [
   "flake8-docstrings"
 ]
 doc = [
+  "m2r2",
+  "numpydoc",
+  "project-parser",
   "sphinx",
-  "sphinx_rtd_theme >= 1.2.2,<2.0.0"
+  "sphinx-autoapi",
+  "sphinx_rdt_theme"
 ]
 
 [project.urls]
