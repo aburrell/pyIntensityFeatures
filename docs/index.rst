@@ -17,6 +17,11 @@ routines to identify features in imager intensity data.
    api.rst
    develop_guide.rst
    history.rst
+   acknowledgements.rst
+
+
+.. admonition:: DISTRIBUTION STATEMENT A: Approved for public release.
+                Distribution is unlimited.
 
 
 
