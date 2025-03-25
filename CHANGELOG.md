@@ -3,7 +3,7 @@ Changelog
 
 Summary of all changes made since the first release
 
-0.1.0 (2025-XX-XX)
+0.1.0 (2025-03-28)
 ------------------
 * Added option to specify maximum dayglow
 * Updated `as_datetime` to remove timezone information
