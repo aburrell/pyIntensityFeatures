@@ -21,10 +21,10 @@ jobs:
             numpy_ver: "1.25"
             os: ubuntu-latest
             test_config: "NEP29"
-	  # Apexpy integration settings
-	  - python-version: "3.11"
-	    numpy_ver: "latest"
-	    os: ubuntu-latest
+          # Apexpy integration settings
+          - python-version: "3.11"
+            numpy_ver: "latest"
+            os: ubuntu-latest
 
     name: Python ${{ matrix.python-version }} on ${{ matrix.os }} with numpy ${{ matrix.numpy_ver }}
     runs-on: ${{ matrix.os }}
