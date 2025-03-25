@@ -57,7 +57,7 @@ test = [
   "flake8-docstrings"
 ]
 doc = [
-  "m2r2",
+  "myst_parser",
   "numpydoc",
   "pyproject-parser",
   "sphinx",
