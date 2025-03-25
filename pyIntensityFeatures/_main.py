@@ -93,7 +93,7 @@ class AuroralBounds(object):
                  stime=None, etime=None,
                  slice_func=satellites.get_auroral_slice, slice_kwargs=None,
                  clean_func=None, clean_kwargs=None):
-        """Initalize the class attributes."""
+        """Set up the class attributes."""
 
         # Set the data object and altitude
         self.inst_data = inst_data

@@ -19,7 +19,7 @@ import pyIntensityFeatures
 
 
 def clean_func(inst_data, clean_var="clean_flag", bad_val=1):
-    """A cleaning function for use in testing the `clean_func` attribute.
+    """Clean data as a test for the `clean_func` attribute.
 
     Parameters
     ----------
