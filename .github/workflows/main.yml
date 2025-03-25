@@ -58,21 +58,23 @@ jobs:
     - name: Run unit and integration tests
       run: coverage run --rcfile=pyproject.toml -m unittest discover
 
-# TODO(#5): Uncomment to publish to coveralls
-#    - name: Publish results to coveralls
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        COVERALLS_PARALLEL: true
-#      run: coveralls --rcfile=pyproject.toml --service=github
-#
-#  finish:
-#    name: Finish Coverage Analysis
-#    needs: build
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Coveralls Finished
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      run: |
-#        pip install --upgrade coveralls
-#        coveralls --service=github --finish
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: run=${{ join(matrix.*, '-') }}
+        parallel: true
+        format: cobertura
+        debug: true
+
+  finish:
+    name: Finish Coverage Analysis
+    needs: build
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
