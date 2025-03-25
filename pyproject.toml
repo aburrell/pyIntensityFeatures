@@ -59,7 +59,7 @@ test = [
 doc = [
   "m2r2",
   "numpydoc",
-  "project_parser",
+  "pyproject-parser",
   "sphinx",
   "sphinx-autoapi",
   "sphinx_rdt_theme"
