@@ -149,7 +149,6 @@ def gauss_quad_err(params, xvals, yvals, weights):
     return err
 
 
-
 def get_fitting_params(mlat_bins, ilats, ilt, mean_intensity, num_gauss=3):
     """Find the parameters for a Gaussian fit with a quadratic background.
 
@@ -173,7 +172,7 @@ def get_fitting_params(mlat_bins, ilats, ilt, mean_intensity, num_gauss=3):
         quadratic background.
     ipeaks : list
         List containing indexes of the normalized intensity peaks for the
-        2D `mean_intesity` array down-selected by [`ilats`, `ilt`]. 
+        2D `mean_intesity` array down-selected by [`ilats`, `ilt`].
 
     """
     # Perform a first-order polynomial fit to the data to obtain estimates for
