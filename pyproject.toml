@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyIntensityFeatures"
-version = "0.0.1"
+version = "0.1.0"
 description = 'Identify features, such as auroral luminosity boundaries, in imager data'
 readme = "README.md"
 requires-python = ">=3.6"
@@ -67,10 +67,10 @@ doc = [
 ]
 
 [project.urls]
-# Documentation = "https://pyintensityfeatures.readthedocs.io/en/latest/"
-# Source = "https://github.com/aburrell/pyIntensityFeatures"
-# Tracker = "https://github.com/aburrell/pyIntensityFeatures/issues"
-# Download = "https://github.com/aburrell/pyIntensityFeatures/releases"
+Documentation = "https://pyintensityfeatures.readthedocs.io/en/latest/"
+Source = "https://github.com/aburrell/pyIntensityFeatures"
+Tracker = "https://github.com/aburrell/pyIntensityFeatures/issues"
+Download = "https://github.com/aburrell/pyIntensityFeatures/releases"
 
 [tool.coverage.run]
 relative_files = true
