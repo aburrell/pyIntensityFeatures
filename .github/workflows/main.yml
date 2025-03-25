@@ -25,6 +25,7 @@ jobs:
           - python-version: "3.11"
             numpy_ver: "latest"
             os: ubuntu-latest
+            test_config: "apexpy"
 
     name: Test ${{ matrix.test_config }} using Python ${{ matrix.python-version }} on ${{ matrix.os }} with numpy ${{ matrix.numpy_ver }}
     runs-on: ${{ matrix.os }}
