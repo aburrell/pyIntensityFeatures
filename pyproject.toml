@@ -52,7 +52,7 @@ dependencies = [
 [project.optional-dependencies]
 apex = [ "apexpy" ]
 test = [
-  "coveralls < 3.3",
+  "coverage[toml]",
   "flake8",
   "flake8-docstrings"
 ]
@@ -62,7 +62,7 @@ doc = [
   "pyproject-parser",
   "sphinx",
   "sphinx-autoapi",
-  "sphinx_rdt_theme"
+  "sphinx_rtd_theme"
 ]
 
 [project.urls]
