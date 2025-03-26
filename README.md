@@ -1,9 +1,8 @@
-[![Documentation Status]()]()
-[![DOI]()]()
-[![PyPI version]()]()
-
-[![Test Status]()]()
-[![Coverage Status]()]()
+[![Documentation Status](https://readthedocs.org/projects/pyIntensityFeatures/badge/?version=latest)](http://pyIntensityFeatures.readthedocs.io/en/latest/?badge=latest)
+[DOI]
+[PyPI version]
+[![Test Status](https://github.com/aburrell/pyIntensityFeatures/actions/workflows/main.yml/badge.svg)](https://github.com/aburrell/pyIntensityFeatures/actions/workflows/main.yml)
+[![Coverage Status](https://coveralls.io/repos/github/aburrell/pyIntensityFeatures/badge.svg?branch=main)](https://coveralls.io/github/aburrell/pyIntensityFeatures?branch=main)
 
 <h1> <img width="128" height="128" src="https://raw.githubusercontent.com/aburrell/pyIntensityFeatures/refs/heads/main/docs/figures/pyIntensityFeatures_logo.png" alt="Snakes marking the boundaries of the auroral oval" title="pyIntensityFeatures logo" style="float:left;">
 Overview </h1>
