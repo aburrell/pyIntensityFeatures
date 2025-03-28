@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Full license can be found in License.md
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Tests for functions in `proc.boundaries`."""
 
@@ -215,6 +218,31 @@ class TestBoundariesFuncs(unittest.TestCase):
                     # Evaluate the outcome
                     self.assertFalse(self.good_bounds)
                     self.assertTrue(np.isnan(self.bounds).all())
+
+        return
+
+    def test_get_eval_boundares_bad_background_threshold(self):
+        """Test a bad background outcome by changing the dayglow threshold."""
+        # Cycle through both hemisphere
+        for hemi in [-1, 1]:
+            # Set the number of peaks
+            for npeak in np.arange(1, self.num_peaks + 1):
+                # Update the fit values
+                coeffs, covar = self.get_coeffs_by_peak_and_hemisphere(npeak,
+                                                                       hemi)
+
+                with self.subTest(hemi=hemi, npeaks=npeak):
+                    # Run the find and eval function
+                    (self.bounds,
+                     self.good_bounds) = boundaries.get_eval_boundaries(
+                         coeffs, covar, self.rvalue, self.pvalue, npeak,
+                         hemi * self.mlat_min, hemi * self.mlat_max, "best",
+                         strict_fit=self.strict_fit, dayglow_threshold=1.0)
+
+                    # Evaluate the outcome
+                    self.assertFalse(self.good_bounds)
+                    self.assertTrue(np.isnan(self.bounds).all())
+
         return
 
     def test_get_eval_boundares_strict_fit(self):

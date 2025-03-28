@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Functions for formatting and preparing output."""
 
 import numpy as np
 import xarray as xr
+
+from pyIntensityFeatures.utils import grids
 
 
 def init_boundary_dicts(opt_coords=None, lat_dim='lat'):
@@ -137,13 +142,13 @@ def reshape_lat_coeff_data(coord_dict, data_dict, max_coeff, lat_dim='lat',
         if np.nanmax(lats) > max_lat:
             max_lat = np.nanmax(lats)
 
-        lincs = np.unique(lats[1:] - lats[:-1])
+        lincs = grids.unique(lats[1:] - lats[:-1])
         if len(lincs) > 1:
             raise ValueError('badly shaped latitude bins')
 
         lat_inc.append(abs(lincs[0]))
 
-    lincs = np.unique(lat_inc)
+    lincs = grids.unique(lat_inc)
     if len(lincs) > 1:
         raise ValueError('inconsistent latitude increments')
 

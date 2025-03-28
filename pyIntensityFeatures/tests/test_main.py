@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Full license can be found in License.md
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Tests for functions in `_main`."""
 
@@ -16,7 +19,7 @@ import pyIntensityFeatures
 
 
 def clean_func(inst_data, clean_var="clean_flag", bad_val=1):
-    """A cleaning function for use in testing the `clean_func` attribute.
+    """Clean data as a test for the `clean_func` attribute.
 
     Parameters
     ----------
@@ -548,7 +551,7 @@ class TestAuroralBounds(unittest.TestCase):
                 elif ctype == 'pandas':
                     self.inst_data = self.inst_data[:-10]
                 else:
-                    self.inst_data.assign({
+                    self.inst_data = xr.Dataset({
                         var: (self.inst_data[var].dims,
                               self.inst_data[var].values[:-10])
                         for var in [self.time_var, self.glat_var, self.glon_var,

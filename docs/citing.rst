@@ -9,20 +9,20 @@ reproducibility of your presented results.
 pyIntensityFeatures
 -------------------
 
-The most recent citation can be found at Zenodo (one it's published). The
-examples here are from the first release, which does not have a DOI.
+The most recent citation can be found at Zenodo. The examples here is from the
+first public release.  A journal article describing this method is forthcoming.
 
-* Burrell, A. G., et al. (2024).
-  pyIntensityFeatures: Initial Release (Version 0.0.1).
+* Burrell, A. G., et al. (2025).
+  pyIntensityFeatures: Beta Release (Version 0.1.0).
 
 .. code-block:: latex
    
     @Misc{pyIntensityFeatures,
           author = {Burrell, A. G. and Longden, N. S. and Chisham, G.},
-	  title  = {pyIntensityFeatures: Initial Release},
-  	  year   = {2024},
-	  date   = {2024-03-01},
-	  version = {v0.0.1},
+	  title  = {pyIntensityFeatures: Beta Release},
+  	  year   = {2025},
+	  date   = {2025-03-28},
+	  version = {v0.1.0},
 	  }
 
 References

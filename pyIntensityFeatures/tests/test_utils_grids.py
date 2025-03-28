@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Full license can be found in License.md
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Tests for functions in `utils.grids`."""
 
@@ -8,6 +11,92 @@ import numpy as np
 import unittest
 
 from pyIntensityFeatures.utils import grids
+
+
+class TestGridUniq(unittest.TestCase):
+    """Tests for local `unique` function."""
+
+    def setUp(self):
+        """Set up the test runs."""
+        self.numbers = [0.0, 0.1, 0.100001, 10.0, 11.0]
+        self.test_dec = [1, 0, -1, -2]
+        self.test_nuniq = [4, 3, 2, 1]
+        self.uniq = []
+        return
+
+    def tearDown(self):
+        """Tear down the test environment."""
+        del self.numbers, self.uniq, self.test_dec, self.test_nuniq
+
+    def test_unique_decimal(self):
+        """Test that `unique` yeilds the correct number of values."""
+        for i, dec in enumerate(self.test_dec):
+            with self.subTest(decimals=dec, num_uniq=self.test_nuniq[i]):
+                self.uniq = grids.unique(self.numbers, decimals=dec)
+                self.assertEqual(len(self.uniq), self.test_nuniq[i])
+        return
+
+    def test_unique_equal_nan(self):
+        """Test that `unique` allows use of `equal_nan` kwarg."""
+        self.numbers.extend([np.nan, np.nan])
+        self.test_nuniq = np.array(self.test_nuniq) + 1
+
+        for i, dec in enumerate(self.test_dec):
+            with self.subTest(decimals=dec):
+                # Test with NaN grouped together
+                self.uniq = grids.unique(self.numbers, decimals=dec,
+                                         equal_nan=True)
+                self.assertEqual(len(self.uniq), self.test_nuniq[i])
+
+                # Test with NaN not grouped together
+                self.uniq = grids.unique(self.numbers, decimals=dec,
+                                         equal_nan=False)
+                self.assertEqual(len(self.uniq), self.test_nuniq[i] + 1)
+        return
+
+    def test_unique_axis(self):
+        """Test that `unique` allows use of `axis` kwarg."""
+        self.numbers = [self.numbers, self.numbers]
+        self.test_nuniq = [(self.test_nuniq[-1],), (1, len(self.numbers[0])),
+                           (len(self.numbers), self.test_nuniq[-1])]
+
+        for i, axis in enumerate([None, 0, 1]):
+            with self.subTest(axis=axis):
+                self.uniq = grids.unique(self.numbers,
+                                         decimals=self.test_dec[-1], axis=axis)
+                self.assertTupleEqual(self.test_nuniq[i], self.uniq.shape)
+        return
+
+    def test_unique_return_counts(self):
+        """Test that `unique` allows use of `return_counts` kwarg."""
+        self.uniq = grids.unique(self.numbers, decimals=self.test_dec[-1],
+                                 return_counts=True)
+
+        self.assertEqual(len(self.uniq[0]), self.test_nuniq[-1])
+        self.assertEqual(self.uniq[1][0], len(self.numbers))
+        return
+
+    def test_unique_return_index(self):
+        """Test that `unique` allows use of `return_index` kwarg."""
+        self.uniq = grids.unique(self.numbers, decimals=self.test_dec[-1],
+                                 return_index=True)
+
+        self.assertEqual(len(self.uniq[0]), self.test_nuniq[-1])
+        self.assertEqual(self.uniq[1][0], 0)
+        return
+
+    def test_unique_return_inverse(self):
+        """Test that `unique` allows use of `return_inverse` kwarg."""
+        self.uniq = grids.unique(self.numbers, decimals=self.test_dec[-1],
+                                 return_inverse=True)
+
+        self.assertEqual(len(self.uniq[0]), self.test_nuniq[-1])
+        self.assertEqual(len(self.uniq[1]), len(self.numbers),
+                         msg="unexpected inverse return: {:}".format(
+                             self.uniq[1]))
+        self.assertListEqual(list(self.uniq[1]),
+                             [0 for i in range(len(self.numbers))])
+        return
 
 
 class TestGridIntensity(unittest.TestCase):

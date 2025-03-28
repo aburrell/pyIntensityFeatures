@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Full license can be found in License.md
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Tests for functions in `utils.coords`."""
 
 import datetime as dt
 import numpy as np
-import pandas as pds
 import unittest
 
 from pyIntensityFeatures.utils import coords
@@ -35,10 +37,10 @@ class TestTimeFuncs(unittest.TestCase):
         """Test success for datetime casting."""
         # Cycle through potential time formats
         for in_time in [dt.date(self.dtime.year, self.dtime.month,
-                                self.dtime.day),
+                                self.dtime.day), self.dtime,
                         np.datetime64(self.dtime.strftime('%Y-%m-%d')),
-                        pds.datetime(self.dtime.year, self.dtime.month,
-                                     self.dtime.day), self.dtime]:
+                        dt.datetime(self.dtime.year, self.dtime.month,
+                                    self.dtime.day, tzinfo=dt.timezone.utc)]:
             with self.subTest(in_time=in_time):
                 # Convert the time
                 self.out = coords.as_datetime(in_time)

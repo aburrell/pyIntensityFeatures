@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Functions for intensity processing."""
 
@@ -13,7 +16,7 @@ from pyIntensityFeatures.proc import fitting
 def find_intensity_boundaries(intensity, glat, glon, sweep_times, alt,
                               min_mlat_base, max_coeff, method='ALLOWTRACE',
                               mlat_inc=1.0, mlt_inc=0.5, un_threshold=1.25,
-                              strict_fit=False):
+                              dayglow_threshold=300.0, strict_fit=False):
     """Find the PALBs and EALBs for a slice of intensity data.
 
     Parameters
@@ -45,6 +48,8 @@ def find_intensity_boundaries(intensity, glat, glon, sweep_times, alt,
         Magnetic local time increment for gridding intensity. (default=0.5)
     un_threshold : float
         Maximum acceptable uncertainty value in degrees (default=1.25)
+    dayglow_threshold : float
+        Minimum allowable background intensity value in Rayleighs (default=300)
     strict_fit : bool
         Enforce positive values for the x-offsets in quadratic-Gaussian fits
         (default=False)
@@ -144,6 +149,7 @@ def find_intensity_boundaries(intensity, glat, glon, sweep_times, alt,
                              params[ng][i], covar[ng][i], rvalue[ng][i],
                              pvalue[ng][i], npeaks[ng][i], mlat_min, mlat_max,
                              eval_method[ng], un_threshold=un_threshold,
+                             dayglow_threshold=dayglow_threshold,
                              strict_fit=strict_fit)
 
                         if np.isnan(bounds[ng]).all():

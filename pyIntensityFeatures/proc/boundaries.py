@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Functions for identifying auroral oval luminosity boundaries."""
 
@@ -355,7 +358,7 @@ def locate_mult_peak_boundaries(fit_coeff, fit_covar, dominant_fit, min_mlat,
 
 def get_eval_boundaries(fit_coeff, fit_cov, rvalue, pvalue, num_peaks,
                         mlat_min, mlat_max, method, un_threshold=1.25,
-                        strict_fit=False):
+                        dayglow_threshold=300.0, strict_fit=False):
     """Find and evaluate the PALB and EALB for a provided fit.
 
     Parameters
@@ -384,6 +387,8 @@ def get_eval_boundaries(fit_coeff, fit_cov, rvalue, pvalue, num_peaks,
         appropriate method ('best'). (default='best')
     un_threshold : float
         Maximum acceptable uncertainty value in degrees (default=1.25)
+    dayglow_threshold : float
+        Minimum allowable background intensity value in Rayleighs (default=300)
     strict_fit : bool
         Enforce positive values for the x-offsets in `fit_coeff` (default=False)
 
@@ -401,7 +406,8 @@ def get_eval_boundaries(fit_coeff, fit_cov, rvalue, pvalue, num_peaks,
                                mlat_max, method, strict_fit=strict_fit)
 
     # Evaluate the background level
-    good_bound = checks.evaluate_dayglow(fit_coeff, [bounds[0], bounds[1]])
+    good_bound = checks.evaluate_dayglow(fit_coeff, [bounds[0], bounds[1]],
+                                         thresh=dayglow_threshold)
 
     if good_bound:
         # Evaluate the robustness of the boundaries

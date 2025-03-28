@@ -1,9 +1,42 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
-"""Functions to create and process grids."""
+"""Functions to support, create, and process grids."""
 
 import numpy as np
+
+
+def unique(vals, decimals=3, **kwargs):
+    """Identify the unique values to the desired significance.
+
+    Parameters
+    ----------
+    vals : array-like
+        Input array that will be flattened unless `axis` is specified
+    decimals : int
+        Number of decimal places to round to. If the number is negative, it
+        specifies the number of positions to the left of the decimal point.
+        (default=3)
+    **kwargs : dict
+        Keyword arguements supported by numpy's unique function.
+
+    Returns
+    -------
+    uvals : array-like
+        Sorted array of unique values.
+
+    See Also
+    --------
+    np.unique
+
+    """
+    # Use numpy unique with rounded values
+    uvals = np.unique(np.round(vals, decimals=decimals), **kwargs)
+
+    return uvals
 
 
 def grid_intensity(intensity, mlat, mlt, eq_mlat=45.0, mlat_inc=1.0,

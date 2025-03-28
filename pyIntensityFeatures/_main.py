@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Main classes and functions for the package."""
 
@@ -90,7 +93,7 @@ class AuroralBounds(object):
                  stime=None, etime=None,
                  slice_func=satellites.get_auroral_slice, slice_kwargs=None,
                  clean_func=None, clean_kwargs=None):
-        """Initalize the class attributes."""
+        """Set up the class attributes."""
 
         # Set the data object and altitude
         self.inst_data = inst_data
@@ -281,8 +284,8 @@ class AuroralBounds(object):
                 # Retrieve the data variable as a key
                 ret_data = np.array(self.inst_data[var])
             except (TypeError, KeyError, ValueError, IndexError):
-                logger.info("".join(["unable to retrieve ", repr(var),
-                                     " from `inst_data`, data may be empty"]))
+                logger.warning("".join(["unable to retrieve ", repr(var), " ",
+                                        "from `inst_data`, data may be empty"]))
                 ret_data = None
 
         # Transpose the data if desired
@@ -353,7 +356,8 @@ class AuroralBounds(object):
 
     def set_boundaries(self, min_mlat_base=59.0, mag_method='ALLOWTRACE',
                        mlat_inc=1.0, mlt_inc=0.5, un_threshold=1.25,
-                       strict_fit=False, lt_out_bin=5.0, max_iqr=1.5):
+                       dayglow_threshold=300.0, strict_fit=False,
+                       lt_out_bin=5.0, max_iqr=1.5):
         """Set `boundaries` with auroral boundaries from intensity data.
 
         Parameters
@@ -369,6 +373,9 @@ class AuroralBounds(object):
             Magnetic local time increment for gridding intensity. (default=0.5)
         un_threshold : float
             Maximum acceptable uncertainty value in degrees (default=1.25)
+        dayglow_threshold : float
+            Minimum allowable background intensity value in Rayleighs
+            (default=300.0)
         strict_fit : bool
             Enforce positive values for the x-offsets in quadratic-Gaussian fits
             (default=False)
@@ -449,7 +456,7 @@ class AuroralBounds(object):
                  intensity, glat, glon, sweep_times, self.alt,
                  min_mlat_base, max_coeff, method=mag_method,
                  mlat_inc=mlat_inc, mlt_inc=mlt_inc, un_threshold=un_threshold,
-                 strict_fit=strict_fit)
+                 dayglow_threshold=dayglow_threshold, strict_fit=strict_fit)
 
             logger.info("Auroral slice at {:} {:s} data".format(
                 sweep_end, "without" if sweep_data is None else "with"))

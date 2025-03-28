@@ -1,11 +1,10 @@
-[![Documentation Status]()]()
-[![DOI]()]()
-[![PyPI version]()]()
+[![Documentation Status](https://readthedocs.org/projects/pyIntensityFeatures/badge/?version=latest)](http://pyIntensityFeatures.readthedocs.io/en/latest/?badge=latest)
+[DOI]
+[PyPI version]
+[![Test Status](https://github.com/aburrell/pyIntensityFeatures/actions/workflows/main.yml/badge.svg)](https://github.com/aburrell/pyIntensityFeatures/actions/workflows/main.yml)
+[![Coverage Status](https://coveralls.io/repos/github/aburrell/pyIntensityFeatures/badge.svg?branch=main)](https://coveralls.io/github/aburrell/pyIntensityFeatures?branch=main)
 
-[![Test Status]()]()
-[![Coverage Status]()]()
-
-<h1> <img width="128" height="128" src="/docs/figures/pyintensityfeatures_logo.png" alt="Snakes marking the boundaries of the auroral oval" title="pyIntensityFeatures logo" style="float:left;">
+<h1> <img width="128" height="128" src="https://raw.githubusercontent.com/aburrell/pyIntensityFeatures/refs/heads/main/docs/figures/pyIntensityFeatures_logo.png" alt="Snakes marking the boundaries of the auroral oval" title="pyIntensityFeatures logo" style="float:left;">
 Overview </h1>
 
 pyIntensityFeatures is a Python module that identifies features in imager
@@ -21,6 +20,7 @@ The required dependecies encompass:
   * aacgmv2
   * numpy
   * pandas
+  * scipy
   * xarray
 
 Optional dependencies include:

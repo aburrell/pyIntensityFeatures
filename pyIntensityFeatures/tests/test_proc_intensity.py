@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Full license can be found in License.md
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Tests for functions in `proc.intensity`."""
 
@@ -37,6 +40,7 @@ class TestIntensityFuncs(unittest.TestCase):
         self.mlat_inc = 2.0
         self.mlt_inc = 1.0
         self.strict_fit = False
+        self.dayglow_thresh = 300.0
         self.aacgmv2_method = ['TRACE', 'ALLOWTRACE', 'BADIDEA', 'GEOCENTRIC']
         self.apexpy_method = ['apex', 'qd']
         self.sweep_end = None
@@ -49,7 +53,7 @@ class TestIntensityFuncs(unittest.TestCase):
         del self.glat, self.glon, self.intensity, self.sweep_times, self.alt
         del self.min_mlat_base, self.max_coeff, self.mlat_inc, self.mlt_inc
         del self.strict_fit, self.aacgmv2_method, self.apexpy_method
-        del self.sweep_end, self.out_data, self.out_coeff
+        del self.sweep_end, self.out_data, self.out_coeff, self.dayglow_thresh
         return
 
     def eval_intensity_output(self, hemisphere):
@@ -117,6 +121,29 @@ class TestIntensityFuncs(unittest.TestCase):
         self.assertTrue(np.isfinite(self.out_data['std_intensity']).any())
         self.assertEqual(self.out_data['num_intensity'].min(), 0)
         self.assertGreater(self.out_data['num_intensity'].max(), 1)
+        return
+
+    def test_find_intensity_boundaries_dayglow_threshold(self):
+        """Test boundary ID rejection with a too-low dayglow threshold."""
+        self.dayglow_thresh = -100.0
+
+        for hemi in [-1, 1]:
+            with self.subTest(hemi=hemi):
+                # Get the boundary outputs
+                (self.sweep_end, self.out_data,
+                 self.out_coeff) = intensity.find_intensity_boundaries(
+                     self.intensity, hemi * self.glat, self.glon,
+                     self.sweep_times, self.alt, self.min_mlat_base,
+                     self.max_coeff, mlat_inc=self.mlat_inc,
+                     mlt_inc=self.mlt_inc, strict_fit=self.strict_fit,
+                     dayglow_threshold=self.dayglow_thresh)
+
+                # Evaluate the outputs
+                self.assertEqual(self.sweep_end, self.sweep_times[-1])
+                self.assertIsNone(self.out_data)
+                self.assertEqual(self.out_coeff, 0,
+                                 msg='unexpected coefficients: {:} {:}'.format(
+                                     self.out_coeff, self.out_data))
         return
 
     def test_find_intensity_boundaries_aaacgm(self):

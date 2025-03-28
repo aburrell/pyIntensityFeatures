@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyIntensityFeatures"
-version = "0.0.1"
+version = "0.1.0"
 description = 'Identify features, such as auroral luminosity boundaries, in imager data'
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.9"
 license = {file = "LICENSE"}
 authors = [
     {name = "Angeline Burrell", email = "angeline.g.burrell.civ@us.navy.mil"}
@@ -20,11 +20,10 @@ classifiers = [
   "License :: OSI Approved :: BSD License",
   "Natural Language :: English",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.6",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Operating System :: POSIX :: Linux",
   "Operating System :: MacOS :: MacOS X",
   "Operating System :: Microsoft :: Windows"
@@ -47,25 +46,30 @@ dependencies = [
   "aacgmv2",
   "numpy",
   "pandas",
+  "scipy",
   "xarray"]
 
 [project.optional-dependencies]
 apex = [ "apexpy" ]
 test = [
-  "coveralls < 3.3",
+  "coverage[toml]",
   "flake8",
   "flake8-docstrings"
 ]
 doc = [
+  "myst_parser",
+  "numpydoc",
+  "pyproject-parser",
   "sphinx",
-  "sphinx_rtd_theme >= 1.2.2,<2.0.0"
+  "sphinx-autoapi",
+  "sphinx_rtd_theme"
 ]
 
 [project.urls]
-# Documentation = "https://pyintensityfeatures.readthedocs.io/en/latest/"
-# Source = "https://github.com/aburrell/pyIntensityFeatures"
-# Tracker = "https://github.com/aburrell/pyIntensityFeatures/issues"
-# Download = "https://github.com/aburrell/pyIntensityFeatures/releases"
+Documentation = "https://pyintensityfeatures.readthedocs.io/en/latest/"
+Source = "https://github.com/aburrell/pyIntensityFeatures"
+Tracker = "https://github.com/aburrell/pyIntensityFeatures/issues"
+Download = "https://github.com/aburrell/pyIntensityFeatures/releases"
 
 [tool.coverage.run]
 relative_files = true

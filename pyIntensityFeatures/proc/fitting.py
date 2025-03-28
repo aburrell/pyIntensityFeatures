@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
+# unlimited.
 # -----------------------------------------------------------------------------
 """Functions used for fitting functions to intensity data."""
 
@@ -146,6 +149,83 @@ def gauss_quad_err(params, xvals, yvals, weights):
     return err
 
 
+def get_fitting_params(mlat_bins, ilats, ilt, mean_intensity, num_gauss=3):
+    """Find the parameters for a Gaussian fit with a quadratic background.
+
+    Parameters
+    ----------
+    mlat_bins : np.array
+        Magnetic latitude of output bin centres
+    ilats : np.array
+        Indices for magnetic latitudes with valid intensity values
+    ilt : int
+        Index for the magnetic local time
+    mean_intensity : np.array
+       2D array of mean intensity values
+    num_gauss : int
+        Maximum number of Gaussians to fit (default=3)
+
+    Returns
+    -------
+    params : list
+        List of the parameters needed to form a mult-Gaussian fit with a
+        quadratic background.
+    ipeaks : list
+        List containing indexes of the normalized intensity peaks for the
+        2D `mean_intesity` array down-selected by [`ilats`, `ilt`].
+
+    """
+    # Perform a first-order polynomial fit to the data to obtain estimates for
+    # the background levels in the intensity profile. The first term is the
+    # slope and the second term is the intercept.
+    bg = np.polyfit(mlat_bins[ilats], mean_intensity[ilats, ilt], 1)
+
+    # Normalize the intensity curve
+    norm_intensity = (mean_intensity[ilats, ilt]
+                      - mean_intensity[ilats, ilt].min()) / (
+                          mean_intensity[ilats, ilt].max()
+                          - mean_intensity[ilats, ilt].min())
+
+    # Find the main peak and its characteristics
+    ipeaks = [norm_intensity.argmax()]
+    peak_sigmas = estimate_peak_widths(norm_intensity, mlat_bins[ilats], ipeaks,
+                                       [norm_intensity[ipeaks[0]]])
+
+    # Locate any additional peaks, up to a desired maximum
+    mlt_gauss = num_gauss
+    while len(ipeaks) < mlt_gauss:
+        # Get a Gaussian for the prior peak
+        prior_gauss = distributions.gauss(
+            mlat_bins[ilats], norm_intensity[ipeaks[-1]],
+            mlat_bins[ilats][ipeaks[-1]], peak_sigmas[-1], 0.0)
+
+        # Remove the gaussian fit from the data
+        norm_intensity -= prior_gauss
+
+        # Get the next peak
+        inew = norm_intensity.argmax()
+
+        # Test to see if the new peak is significant
+        if not np.any((mlat_bins[ilats][inew] > mlat_bins[ilats][ipeaks]
+                       - np.asarray(peak_sigmas) * 2.0)
+                      & (mlat_bins[ilats][inew] < mlat_bins[ilats][ipeaks]
+                         + np.asarray(peak_sigmas) * 2.0)):
+            ipeaks.append(inew)
+            peak_sigmas.extend(estimate_peak_widths(
+                norm_intensity, mlat_bins[ilats], [ipeaks[-1]],
+                [norm_intensity[ipeaks[-1]]]))
+        else:
+            mlt_gauss = len(ipeaks)
+
+    # Use the peak information to set the Gaussian fitting parameters
+    params = [bg[1], bg[0], 0.0]
+    for i, ipeak in enumerate(ipeaks):
+        params.extend([mean_intensity[ilats, ilt][ipeak],
+                       mlat_bins[ilats][ipeak], peak_sigmas[i]])
+
+    return params, ipeaks
+
+
 def get_gaussian_func_fit(mlat_bins, mlt_bins, mean_intensity, std_intensity,
                           num_intensity, num_gauss=3, min_num=3,
                           min_intensity=0.0, min_lat_perc=70.0):
@@ -211,56 +291,9 @@ def get_gaussian_func_fit(mlat_bins, mlt_bins, mean_intensity, std_intensity,
                          & (mean_intensity[:, ilt] >= min_intensity))[0]
 
         if len(ilats) * perc_mult >= min_lat_perc:
-            # Perform a first-order polynomial fit to the data to obtain
-            # estimates for the background levels in the intensity profile. The
-            # first term is the slope and the second term is the intercept.
-            bg = np.polyfit(mlat_bins[ilats], mean_intensity[ilats, ilt], 1)
-
-            # Normalize the intensity curve
-            norm_intensity = (mean_intensity[ilats, ilt]
-                              - mean_intensity[ilats, ilt].min()) / (
-                                  mean_intensity[ilats, ilt].max()
-                                  - mean_intensity[ilats, ilt].min())
-
-            # Find the main peak and its characteristics
-            ipeaks = [norm_intensity.argmax()]
-            peak_sigmas = estimate_peak_widths(norm_intensity,
-                                               mlat_bins[ilats], ipeaks,
-                                               [norm_intensity[ipeaks[0]]])
-
-            # Locate any additional peaks, up to a desired maximum
-            mlt_gauss = num_gauss
-            while len(ipeaks) < mlt_gauss:
-                # Get a Gaussian for the prior peak
-                prior_gauss = distributions.gauss(
-                    mlat_bins[ilats], norm_intensity[ipeaks[-1]],
-                    mlat_bins[ilats][ipeaks[-1]], peak_sigmas[-1], 0.0)
-
-                # Remove the gaussian fit from the data
-                norm_intensity -= prior_gauss
-
-                # Get the next peak
-                inew = norm_intensity.argmax()
-
-                # Test to see if the new peak is significant
-                if not np.any((mlat_bins[ilats][inew]
-                               > mlat_bins[ilats][ipeaks]
-                               - np.asarray(peak_sigmas) * 2.0)
-                              & (mlat_bins[ilats][inew]
-                                 < mlat_bins[ilats][ipeaks]
-                                 + np.asarray(peak_sigmas) * 2.0)):
-                    ipeaks.append(inew)
-                    peak_sigmas.extend(estimate_peak_widths(
-                        norm_intensity, mlat_bins[ilats], [ipeaks[-1]],
-                        [norm_intensity[ipeaks[-1]]]))
-                else:
-                    mlt_gauss = len(ipeaks)
-
-            # Use the peak information to set the Gaussian fitting parameters
-            params = [bg[1], bg[0], 0.0]
-            for i, ipeak in enumerate(ipeaks):
-                params.extend([mean_intensity[ilats, ilt][ipeak],
-                               mlat_bins[ilats][ipeak], peak_sigmas[i]])
+            # Get the peak information to set the Gaussian fitting parameters
+            params, ipeaks = get_fitting_params(mlat_bins, ilats, ilt,
+                                                mean_intensity, num_gauss)
 
             # Find the desired Gaussian + Quadratic fit using least-squares
             # if there are enough latitudes to provide a fit
@@ -281,8 +314,15 @@ def get_gaussian_func_fit(mlat_bins, mlt_bins, mean_intensity, std_intensity,
                             mean_intensity[ilats, ilt][fmask],
                             gauss_out[fmask])
                         func_params.append(lsq_result[0])
-                        fit_pearsonr.append(pres.statistic)
-                        fit_pearsonp.append(pres.pvalue)
+
+                        # As of scipy 1.11.0 the output changed
+                        if hasattr(pres, 'statistic'):
+                            fit_pearsonr.append(pres.statistic)
+                            fit_pearsonp.append(pres.pvalue)
+                        else:
+                            fit_pearsonr.append(pres[0])
+                            fit_pearsonp.append(pres[1])
+
                         fit_cov.append(lsq_result[1])
                         found_fit = True
                     else:
