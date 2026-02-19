@@ -3,6 +3,10 @@ Changelog
 
 Summary of all changes made since the first release
 
+0.1.1 (2026-XX-XX)
+------------------
+* Updated documentation by fixing incorrect description of keywords.
+
 0.1.0 (2025-03-28)
 ------------------
 * Added option to specify maximum dayglow
