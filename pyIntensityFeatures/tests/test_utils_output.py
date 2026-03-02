@@ -121,7 +121,7 @@ class TestBoundaryDictFuncs(unittest.TestCase):
         for coord in self.coord_dict.keys():
             self.assertIn(coord, self.dataset.coords)
 
-            if coord in self.dataset.dims:
+            if coord in self.dataset.sizes:
                 if coord.find('sweep') < 0:
                     self.assertTrue(
                         np.all(self.dataset.coords[coord].values
@@ -399,7 +399,7 @@ class TestBoundaryDictFuncs(unittest.TestCase):
                                                     self.data_dict, 0)
 
         # Evalute the empty dataset
-        self.assertEqual(len(self.dataset.dims), 0)
+        self.assertEqual(len(self.dataset.sizes), 0)
         self.assertEqual(len(self.dataset.data_vars), 0)
         return
 
