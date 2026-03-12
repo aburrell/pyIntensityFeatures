@@ -8,8 +8,6 @@
 
 import numpy as np
 
-import warnings
-
 
 def calc_quadratic(x, c, b, a):
     """Calculate the quadratic value at a specified location.
