@@ -900,9 +900,11 @@ class TestEvalBoundariesMLT(unittest.TestCase):
                                    checks.evaluate_boundary_in_mlt,
                                    *[self.bound_data, self.eq_key, self.po_key,
                                      self.lt_key, self.ut_key])
-        except AssertionError as aerr:
-            checks.evaluate_boundary_in_mlt(self.bound_data, self.eq_key, self.po_key, self.lt_key, self.ut_key)
-            
+        except AssertionError:
+            checks.evaluate_boundary_in_mlt(self.bound_data, self.eq_key,
+                                            self.po_key, self.lt_key,
+                                            self.ut_key)
+
         return
 
     def test_eval_success_no_removal(self):
