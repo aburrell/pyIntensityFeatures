@@ -215,8 +215,8 @@ class TestAuroralBounds(unittest.TestCase):
             end = pyIntensityFeatures.utils.coords.as_datetime(
                 self.inst_data[self.time_var].values[-1])
         else:
-            start = self.inst_data[self.time_var][0]
-            end = self.inst_data[self.time_var][-1]
+            start = list(self.inst_data[self.time_var])[0]
+            end = list(self.inst_data[self.time_var])[-1]
 
         # Evaluate the times
         self.assertTrue(self.alb.stime == start,
