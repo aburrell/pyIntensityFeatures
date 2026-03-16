@@ -215,8 +215,8 @@ class TestAuroralBounds(unittest.TestCase):
             end = pyIntensityFeatures.utils.coords.as_datetime(
                 self.inst_data[self.time_var].values[-1])
         else:
-            start = self.inst_data[self.time_var][0]
-            end = self.inst_data[self.time_var][-1]
+            start = list(self.inst_data[self.time_var])[0]
+            end = list(self.inst_data[self.time_var])[-1]
 
         # Evaluate the times
         self.assertTrue(self.alb.stime == start,
@@ -273,7 +273,7 @@ class TestAuroralBounds(unittest.TestCase):
                              msg="unexpected default attributes")
         self.assertDictEqual({'sweep_start': 1, 'mlt': 48, 'coeff': 6,
                               'lat': 31, 'sweep_end': 1},
-                             dict(self.alb.boundaries.dims),
+                             dict(self.alb.boundaries.sizes),
                              msg="unexpected default dimensions")
         self.assertListEqual(["sweep_start", "sweep_end", "mlt", "hemisphere",
                               "lat"],
@@ -552,7 +552,7 @@ class TestAuroralBounds(unittest.TestCase):
                     self.inst_data = self.inst_data[:-10]
                 else:
                     self.inst_data = xr.Dataset({
-                        var: (self.inst_data[var].dims,
+                        var: (self.inst_data[var].sizes,
                               self.inst_data[var].values[:-10])
                         for var in [self.time_var, self.glat_var, self.glon_var,
                                     self.intensity_var, 'clean_flag']})
