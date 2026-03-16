@@ -1,6 +1,6 @@
 [![Documentation Status](https://readthedocs.org/projects/pyIntensityFeatures/badge/?version=latest)](http://pyIntensityFeatures.readthedocs.io/en/latest/?badge=latest)
-[DOI]
-[PyPI version]
+[![DOI](https://zenodo.org/badge/954923667.svg)](https://doi.org/10.5281/zenodo.15102100)
+[![PyPI version](https://badge.fury.io/py/pyIntensityFeatures.svg)](https://badge.fury.io/py/pyIntensityFeatures)
 [![Test Status](https://github.com/aburrell/pyIntensityFeatures/actions/workflows/main.yml/badge.svg)](https://github.com/aburrell/pyIntensityFeatures/actions/workflows/main.yml)
 [![Coverage Status](https://coveralls.io/repos/github/aburrell/pyIntensityFeatures/badge.svg?branch=main)](https://coveralls.io/github/aburrell/pyIntensityFeatures?branch=main)
 
