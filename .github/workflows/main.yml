@@ -12,13 +12,13 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.12", "3.13", "3.14"]
         numpy_ver: ["latest"]
         test_config: ["standard"]
         include:
           # NEP29 compliance settings
-          - python-version: "3.10"
-            numpy_ver: "1.25"
+          - python-version: "3.11"
+            numpy_ver: "2.0"
             os: ubuntu-latest
             test_config: "NEP29"
           # Apexpy integration settings

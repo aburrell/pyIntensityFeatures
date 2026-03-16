@@ -8,11 +8,7 @@
 """Package to identify intensity features in imager data."""
 
 import logging
-
-try:
-    from importlib import metadata
-except ImportError:
-    import importlib_metadata as metadata
+from importlib import metadata
 
 # Define a logger object to allow easier log handling
 logging.raiseExceptions = False
