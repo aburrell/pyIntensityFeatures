@@ -11,6 +11,7 @@ Summary of all changes made since the first release
 * Removed support for older SciPy versions
 * Added journal article citation to the documents and .zenodo.json
 * Added missing badges to the README
+* Added DOI to file headers
 * Updated documentation by fixing incorrect description of keywords,
   updating hyperlinks, and fixing a typo in the fitting example
 * Updated xarray objects to use `sizes` attribute instead of `dims`
