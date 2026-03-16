@@ -3,7 +3,7 @@ Changelog
 
 Summary of all changes made since the first release
 
-0.2.0 (2026-XX-XX)
+0.2.0 (2026-03-20)
 ------------------
 * Fixed bug in the CI apexpy installation
 * Cycled Python version support and updated NEP 29 test
