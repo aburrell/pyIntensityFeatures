@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
+# Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
 # unlimited.
@@ -315,7 +317,7 @@ def get_gaussian_func_fit(mlat_bins, mlt_bins, mean_intensity, std_intensity,
                             gauss_out[fmask])
                         func_params.append(lsq_result[0])
 
-                        # scipy version below 1.9.0 will not work
+                        # SciPy versions below 1.9.0 will not work
                         fit_pearsonr.append(pres.statistic)
                         fit_pearsonp.append(pres.pvalue)
 
