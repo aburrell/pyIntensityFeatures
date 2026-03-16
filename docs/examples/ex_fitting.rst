@@ -27,7 +27,7 @@ peak are determined.
    import numpy as np
 
    from pyIntensityFeatures.utils import coords
-   from pyIntensityFeatures.utils import distribution
+   from pyIntensityFeatures.utils import distributions
    from pyIntensityFeatures.proc import fitting
 
    # Initalize the figure
