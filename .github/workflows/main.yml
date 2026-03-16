@@ -48,7 +48,9 @@ jobs:
 
     - name: Install apexpy extras
       if: ${{ matrix.test_config == 'apexpy' }}
-      run: pip install .[apex]
+      run:  |
+        pip install .[apex]
+        python -c "import apexpy; print(apexpy.__version__)"
 
     - name: Test PEP8 compliance
       run: flake8 . --count --select=D,E,F,H,W --show-source --statistics
