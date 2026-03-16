@@ -5,6 +5,7 @@ Summary of all changes made since the first release
 
 0.1.1 (2026-XX-XX)
 ------------------
+* Fixed bug in the CI apexpy installation
 * Cycled Python version support and updated NEP 29 test
 * Added journal article citation to the documents
 * Added missing badges to the README
