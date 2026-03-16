@@ -5,6 +5,8 @@ Summary of all changes made since the first release
 
 0.1.1 (2026-XX-XX)
 ------------------
+* Added journal article citation to the documents
+* Added missing badges to the README
 * Updated documentation by fixing incorrect description of keywords and
   updating hyperlinks
 * Updated xarray objects to use `sizes` attribute instead of `dims`
