@@ -1,7 +1,11 @@
 {
     "license": {
       "id": "bsd-license"
-    },
+    }, 
+    "notes": "When referencing this package, please cite both the package DOI and the pyIntensityFeatures journal article: Burrell, A. G., Chisham, G., Longden, N., Fritz, B., & Zawdie, K. A. (2025). Automated identification of auroral luminosity boundaries using pyIntensityFeatures. Journal of Geophysical Research: Space Physics, 130, e2025JA034230. doi:10.1029/2025JA034230.",
+    "references": [
+      "Burrell, A. G., Chisham, G., Longden, N., Fritz, B., & Zawdie, K. A. (2025). Automated identification of auroral luminosity boundaries using pyIntensityFeatures. Journal of Geophysical Research: Space Physics, 130, e2025JA034230. doi:10.1029/2025JA034230."
+    ],
     "keywords": [
   "aurora",
   "aurora australis",
