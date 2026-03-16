@@ -56,6 +56,8 @@ def convert_geo_to_mag(ctime, glat, glon, alt, method='ALLOWTRACE'):
         if apexpy is None:
             raise ValueError('apexpy is not available.')
 
+        raise RuntimeError(method)
+
         # Convert the data, requires 1D arrays
         apex = apexpy.Apex(date=ctime, refh=alt)
         mlat, mlon = apex.convert(glat.flatten(), glon.flatten(), source='geo',
