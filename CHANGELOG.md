@@ -7,6 +7,8 @@ Summary of all changes made since the first release
 ------------------
 * Fixed bug in the CI apexpy installation
 * Cycled Python version support and updated NEP 29 test
+* Expanded unit tests
+* Removed support for older SciPy versions
 * Added journal article citation to the documents and .zenodo.json
 * Added missing badges to the README
 * Updated documentation by fixing incorrect description of keywords,

@@ -117,10 +117,6 @@ def get_auroral_slice(time_data, glat_data, glon_data, int_data,
             if itime >= len(time_data):
                 itime = -1
 
-            if len(sweep_times) == 0:
-                # If no times were found, insert the start time
-                sweep_times.append(start_time)
-
             sweep_times.append(time_data[itime])
 
         # The sweep has ended, select the desired time indices
