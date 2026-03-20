@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
+# Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
 # unlimited.
@@ -374,7 +376,7 @@ class AuroralBounds(object):
         un_threshold : float
             Maximum acceptable uncertainty value in degrees (default=1.25)
         dayglow_threshold : float
-            Minimum allowable background intensity value in Rayleighs
+            Maximum allowable background intensity value in Rayleighs
             (default=300.0)
         strict_fit : bool
             Enforce positive values for the x-offsets in quadratic-Gaussian fits

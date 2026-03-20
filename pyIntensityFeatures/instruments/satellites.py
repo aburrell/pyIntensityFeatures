@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
+# Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
 # unlimited.
@@ -116,10 +118,6 @@ def get_auroral_slice(time_data, glat_data, glon_data, int_data,
         if len(sweep_times) < 2:
             if itime >= len(time_data):
                 itime = -1
-
-            if len(sweep_times) == 0:
-                # If no times were found, insert the start time
-                sweep_times.append(start_time)
 
             sweep_times.append(time_data[itime])
 

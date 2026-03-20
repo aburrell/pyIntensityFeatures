@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
 # Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
@@ -8,11 +9,7 @@
 """Package to identify intensity features in imager data."""
 
 import logging
-
-try:
-    from importlib import metadata
-except ImportError:
-    import importlib_metadata as metadata
+from importlib import metadata
 
 # Define a logger object to allow easier log handling
 logging.raiseExceptions = False

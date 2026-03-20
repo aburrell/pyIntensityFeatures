@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
+# Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
 # unlimited.
@@ -194,7 +196,7 @@ def evaluate_dayglow(fit_coeff, locations, thresh=300.0):
     locations : array-like
         Locations at which the dayglow level will be evaluated.
     thresh : float
-        Minimum allowable background intensity value in Rayleighs (default=300)
+        Maximum allowable background intensity value in Rayleighs (default=300)
 
     Returns
     -------

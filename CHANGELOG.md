@@ -3,6 +3,20 @@ Changelog
 
 Summary of all changes made since the first release
 
+0.2.0 (2026-03-20)
+------------------
+* Fixed bug in the CI apexpy installation
+* Cycled Python version support and updated NEP 29 test
+* Expanded unit tests
+* Removed support for older SciPy versions
+* Added journal article citation to the documents and .zenodo.json
+* Added missing badges to the README
+* Added DOI to file headers
+* Updated documentation by fixing incorrect description of keywords,
+  updating hyperlinks, and fixing a typo in the fitting example
+* Updated xarray objects to use `sizes` attribute instead of `dims`
+* Added an error catch to remove RuntimeWarning in `gauss` function
+
 0.1.0 (2025-03-28)
 ------------------
 * Added option to specify maximum dayglow

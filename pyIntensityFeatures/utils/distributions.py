@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
+# Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
 # unlimited.
@@ -57,7 +59,10 @@ def gauss(x, amp, mu, sigma, const):
         Normal value at `x`
 
     """
-    y = amp * np.exp(-np.power((x - mu), 2.0) / (2.0 * sigma**2)) + const
+    if abs(sigma) > 0.0:
+        y = amp * np.exp(-np.power((x - mu), 2.0) / (2.0 * sigma**2)) + const
+    else:
+        y = np.zeros(shape=x.shape, dtype=float)
 
     return y
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
 # Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
@@ -202,4 +203,54 @@ class TestIntensityFuncs(unittest.TestCase):
                 self.assertRaisesRegex(ValueError, "apexpy is not available.",
                                        intensity.find_intensity_boundaries,
                                        *args)
+        return
+
+    def test_find_intensity_bad_eq_boundaries(self):
+        """Test boundary ID in an equatorial boundary failure."""
+        # Change intensity to have a peak where the equatorial boundary will
+        # not be defined
+        self.intensity = mult_gauss_quad(self.glat, *[
+            1.0, 0.01, 0.001, 500.0, 60.0, 3.0])
+
+        for hemi in [-1, 1]:
+            with self.subTest(hemi=hemi):
+                # Get the boundary outputs
+                (self.sweep_end, self.out_data,
+                 self.out_coeff) = intensity.find_intensity_boundaries(
+                     self.intensity, hemi * self.glat, self.glon,
+                     self.sweep_times, self.alt, self.min_mlat_base,
+                     self.max_coeff, mlat_inc=self.mlat_inc,
+                     mlt_inc=self.mlt_inc, strict_fit=self.strict_fit)
+
+                # Evaluate the outputs
+                self.assertEqual(self.sweep_end, self.sweep_times[-1])
+                self.assertLessEqual(self.out_coeff, 12)
+                self.assertGreater(self.out_coeff, 0)
+                self.assertTrue(np.isnan(self.out_data['eq_bounds']).all())
+                self.assertFalse(np.isnan(self.out_data['po_bounds']).all())
+
+        return
+
+    def test_find_intensity_bad_po_boundaries(self):
+        """Test boundary ID in a polar boundary failure."""
+        # Change intensity to have a peak where the polar boundary will not
+        # be defined in the southern hemisphere
+        self.intensity = mult_gauss_quad(self.glat, *[
+            -1.0, -0.1, 0.01, 40.0, 77.0, 5.0])
+
+        # Get the boundary outputs
+        (self.sweep_end, self.out_data,
+         self.out_coeff) = intensity.find_intensity_boundaries(
+             self.intensity, -1 * self.glat, self.glon,
+             self.sweep_times, self.alt, self.min_mlat_base,
+             self.max_coeff, mlat_inc=self.mlat_inc,
+             mlt_inc=self.mlt_inc, strict_fit=self.strict_fit)
+
+        # Evaluate the outputs
+        self.assertEqual(self.sweep_end, self.sweep_times[-1])
+        self.assertLessEqual(self.out_coeff, 12)
+        self.assertGreater(self.out_coeff, 0)
+        self.assertFalse(np.isnan(self.out_data['eq_bounds']).all())
+        self.assertTrue(np.isnan(self.out_data['po_bounds']).all())
+
         return

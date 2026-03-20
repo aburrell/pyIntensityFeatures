@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# DOI: 10.5281/zenodo.15102100
 # Full license can be found in License.md
 #
 # DISTRIBUTION STATEMENT A: Approved for public release. Distribution is
@@ -892,13 +893,14 @@ class TestEvalBoundariesMLT(unittest.TestCase):
         """Test raises ValueError with bad MLT coordinates."""
         # Update the MLT coordinates
         self.mlt[0] += 0.01
-        self.bound_data.assign({self.lt_key: self.mlt})
+        self.bound_data = self.bound_data.assign({self.lt_key: self.mlt})
 
         # Run and check the error
         self.assertRaisesRegex(ValueError, "not have a fixed frequency",
                                checks.evaluate_boundary_in_mlt,
                                *[self.bound_data, self.eq_key, self.po_key,
                                  self.lt_key, self.ut_key])
+
         return
 
     def test_eval_success_no_removal(self):
