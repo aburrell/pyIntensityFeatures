@@ -33,7 +33,7 @@ zenodo = json.loads(open('../.zenodo.json').read())
 author = ', '.join([auth['name'] for auth in zenodo['creators']])
 description = 'pyIntensityFeatures identifies features in imager data.'
 category = 'Space Physics'
-copyright = ', '.join(['2024', author])
+copyright = ', '.join(['2026', author])
 
 # The short X.Y version
 version = info.project['version'].base_version
